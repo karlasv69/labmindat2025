@@ -2,7 +2,18 @@ stages:
   clean_data:
     cmd: python src/data_prep.py
     deps:
-      - data/raw/telco_churn.csv
-      - src/data_prep.py
+    - data/raw/telco_churn.csv
+    - src/data_prep.py
     outs:
-      - data/processed/data_clean.csv
+    - data/processed/data_clean.csv
+  train:
+    cmd: python src/train.py
+    deps:
+    - data/processed/data_clean.csv
+    - params.yaml
+    - src/train.py
+    outs:
+    - models/churn_model.pkl
+    metrics:
+    - metrics.json:
+        cache: false
